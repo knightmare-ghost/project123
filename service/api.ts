@@ -455,7 +455,22 @@ class ApiClient {
             description: c.description || "",
             bus_type: c.bus_type || "",
             total_seats: c.total_seats || 0,
-            seat_layout: c.seat_layout || { rows: 0, columns: 0, seats: [] },
+            seat_layout: c.seat_layout ? {
+              rows: c.seat_layout.rows || 0,
+              columns: c.seat_layout.columns || 0,
+              arrangement_pattern: c.seat_layout.arrangement_pattern || "",
+              seats: Array.isArray(c.seat_layout.seats) ? c.seat_layout.seats.map((s: any) => ({
+                id: s.id || "",
+                row: s.row || 0,
+                column: s.column || 0,
+                visual_row: s.visual_row !== undefined ? s.visual_row : s.row,
+                visual_column: s.visual_column !== undefined ? s.visual_column : s.column,
+                type: s.type || "regular",
+                available: s.available !== undefined ? s.available : true,
+                is_walkway: s.is_walkway || false,
+                label: s.label || "",
+              })) : []
+            } : { rows: 0, columns: 0, seats: [] },
             amenities: Array.isArray(c.amenities) ? c.amenities : [],
             created_at: c.created_at || "",
             updated_at: c.updated_at || ""
@@ -497,7 +512,22 @@ class ApiClient {
         description: c.description || "",
         bus_type: c.bus_type || "",
         total_seats: c.total_seats || 0,
-        seat_layout: c.seat_layout || { rows: 0, columns: 0, seats: [] },
+        seat_layout: c.seat_layout ? {
+          rows: c.seat_layout.rows || 0,
+          columns: c.seat_layout.columns || 0,
+          arrangement_pattern: c.seat_layout.arrangement_pattern || "",
+          seats: Array.isArray(c.seat_layout.seats) ? c.seat_layout.seats.map((s: any) => ({
+            id: s.id || "",
+            row: s.row || 0,
+            column: s.column || 0,
+            visual_row: s.visual_row !== undefined ? s.visual_row : s.row,
+            visual_column: s.visual_column !== undefined ? s.visual_column : s.column,
+            type: s.type || "regular",
+            available: s.available !== undefined ? s.available : true,
+            is_walkway: s.is_walkway || false,
+            label: s.label || "",
+          })) : []
+        } : { rows: 0, columns: 0, seats: [] },
         amenities: Array.isArray(c.amenities) ? c.amenities : [],
         created_at: c.created_at || "",
         updated_at: c.updated_at || ""
